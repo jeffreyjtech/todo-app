@@ -1,6 +1,5 @@
 import { Card, Checkbox } from "@blueprintjs/core";
 
-
 function TodoItem({ item, toggleComplete }) {
   return (
     <Card>

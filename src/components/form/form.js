@@ -20,7 +20,6 @@ function Form({ addToList }) {
     addToList(newItem);
   }
 
-
   return (
     <form onSubmit={handleSubmit}>
       <h2>Add To Do Item</h2>
