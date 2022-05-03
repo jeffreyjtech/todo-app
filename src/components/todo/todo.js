@@ -12,11 +12,13 @@ const ToDo = () => {
   const [incomplete, setIncomplete] = useState([]);
   const [page, setPage] = useState(1);
 
+  /*
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);
     setList(items);
   }
-
+  */
+ 
   function addToList(item) {
     setList([...list, item]);
   }
