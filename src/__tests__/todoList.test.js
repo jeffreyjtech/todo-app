@@ -23,7 +23,7 @@ describe('Integration tests of todo list', () => {
     const addButton = screen.getByText('Add Item');
     fireEvent.click(addButton);
 
-    const newTodoItem = await screen.findByText('test text');
+    const newTodoItem = screen.getByText('test text');
     expect(newTodoItem).toBeInTheDocument();
   });
 });
