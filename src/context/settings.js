@@ -8,7 +8,7 @@ function Settings({ children }) {
   const [sortParams, /*setSortParams*/] = useState('');
 
   return (
-    <SettingsContext.Provider value={{showCompleted, itemQty, sortParams}}>
+    <SettingsContext.Provider value={{ showCompleted, itemQty, sortParams }}>
       {children}
     </SettingsContext.Provider>
   );
