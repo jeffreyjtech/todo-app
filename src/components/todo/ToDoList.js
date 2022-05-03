@@ -3,10 +3,10 @@ import { Menu, Button, ButtonGroup } from '@blueprintjs/core';
 import { v4 as uuid } from 'uuid';
 
 import { SettingsContext } from '../../context/settings.js';
-import TodoItem from '../todoItem/todoItem';
-import Form from '../form/form';
+import TodoItem from '../todoItem/ToDoItem';
+import Form from '../form/Form';
 
-const ToDo = () => {
+const ToDoList = () => {
 
   const { showCompleted, itemQty, sortParams } = useContext(SettingsContext)
   const [list, setList] = useState([]);
@@ -63,7 +63,7 @@ const ToDo = () => {
     pageButtons[i] = <Button onClick={changePage} value={i} key={uuid()}>{i}</Button>
   }
 
-  sortedList = sortedList.filter((item, idx) => idx < page * itemQty && idx >= (page - 1) * itemQty)
+  sortedList = sortedList.filter((item, idx) => idx < page * itemQty && idx >= (page - 1) * itemQty);
 
   return (
     <>
@@ -89,4 +89,4 @@ const ToDo = () => {
   );
 };
 
-export default ToDo;
+export default ToDoList;

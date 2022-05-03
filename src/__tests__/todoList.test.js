@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 
-import App from '../app';
+import App from '../App';
 import SettingsProvider from '../context/settings';
 
 describe('Integration tests of todo list', () => {
