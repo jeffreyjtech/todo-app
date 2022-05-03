@@ -14,10 +14,9 @@ function Form({ addToList }) {
     // This deep copy assignment is needed in order to avoid improperly changing the "values" state in the useForm hook
     // The current architecture of this app is terrible.
     // This callback takes in a seemingly innocuous "item"  param but that's actually a React state object which should never ever be manipulated directly
-    let newItem = { ...item }
-    newItem.id = uuid();
-    newItem.complete = false;
-    addToList(newItem);
+    item.id = uuid();
+    item.complete = false;
+    addToList(item);
   }
 
   return (
