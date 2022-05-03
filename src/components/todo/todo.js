@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useForm from '../../hooks/form.js';
 
-import { v4 as uuid } from 'uuid';
+import crypto from 'crypto';
 
 const ToDo = () => {
 
@@ -15,7 +15,7 @@ const ToDo = () => {
 
   function addItem(item) {
     console.log(item);
-    item.id = uuid();
+    item.id = crypto.randomUUID();
     item.complete = false;
     setList([...list, item]);
   }
