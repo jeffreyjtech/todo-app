@@ -6,8 +6,8 @@ const useForm = (callback, defaultValues={}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // I'm using the spread operator here so the callback function cannot manipulate state directly
-    callback(...values);
+    // I'm using the spread operator inside an object literal here so the callback function cannot manipulate state directly
+    callback({...values});
   };
 
   const handleChange = (event) => {
