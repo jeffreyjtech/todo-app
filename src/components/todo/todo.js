@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import TodoItem from '../todoItem/todoItem';
-
 import { Menu, Button, ButtonGroup } from '@blueprintjs/core';
+import { v4 as uuid } from 'uuid';
+
 import { SettingsContext } from '../../context/settings.js';
+import TodoItem from '../todoItem/todoItem';
 import Form from '../form/form';
 
 const ToDo = () => {
@@ -53,14 +54,13 @@ const ToDo = () => {
   }
 
   sortedList = sortedList.filter((item) => {
-    console.log(item.text, sortParams)
     return item.text.toLowerCase().includes(sortParams.toLowerCase());
   });
 
   let pageButtons = [];
   let pageQty = Math.ceil(sortedList.length / itemQty);
   for (let i = 1; i <= pageQty; i++) {
-    pageButtons[i] = <Button onClick={changePage} value={i}>{i}</Button>
+    pageButtons[i] = <Button onClick={changePage} value={i} key={uuid()}>{i}</Button>
   }
 
   sortedList = sortedList.filter((item, idx) => idx < page * itemQty && idx >= (page - 1) * itemQty)
