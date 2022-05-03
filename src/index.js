@@ -1,13 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
-import App from './app.js';
+import './index.scss'
+import App from './App.js';
+import SettingsProvider from './context/settings';
 
-class Main extends React.Component {
-  render() {
-    return <App />;
-  }
-}
-
-const rootElement = document.getElementById('root');
-ReactDOM.render(<Main />, rootElement);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <SettingsProvider>
+      <App />
+    </SettingsProvider>
+  </React.StrictMode>
+);
