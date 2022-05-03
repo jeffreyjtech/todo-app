@@ -27,17 +27,37 @@ function Form({ addToList }) {
 
       <label>
         <span>To Do Item</span>
-        <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
+        <input
+          onChange={handleChange}
+          name="text"
+          type="text"
+          placeholder="Item Details"
+          data-testid="text-input"
+        />
       </label>
 
       <label>
         <span>Assigned To</span>
-        <input onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" />
+        <input
+          onChange={handleChange}
+          name="assignee"
+          type="text"
+          placeholder="Assignee Name"
+          data-testid="assignee-input"
+        />
       </label>
 
       <label>
         <span>Difficulty</span>
-        <input onChange={handleChange} defaultValue={defaultValues.difficulty} type="range" min={1} max={5} name="difficulty" />
+        <input
+          onChange={handleChange}
+          defaultValue={defaultValues.difficulty}
+          type="range"
+          min={1}
+          max={5}
+          name="difficulty"
+          data-testid="difficulty-input"
+        />
       </label>
 
       <label>

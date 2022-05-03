@@ -1,8 +1,8 @@
 import { Card, Checkbox } from "@blueprintjs/core";
 
 
-function TodoItem({item, toggleComplete}) {
-  return( 
+function TodoItem({ item, toggleComplete }) {
+  return (
     <Card>
       <p>{item.text}</p>
       <p><small>Assigned to: {item.assignee}</small></p>

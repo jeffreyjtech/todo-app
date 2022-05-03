@@ -18,7 +18,7 @@ const ToDo = () => {
     setList(items);
   }
   */
- 
+
   function addToList(item) {
     setList([...list, item]);
   }
@@ -71,7 +71,7 @@ const ToDo = () => {
         <h1>To Do List: {incomplete} items pending</h1>
       </header>
       <Menu>
-        <Form addToList={addToList}/>
+        <Form addToList={addToList} />
         <ButtonGroup>
           {pageButtons}
         </ButtonGroup>
