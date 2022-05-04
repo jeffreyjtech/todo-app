@@ -24,8 +24,17 @@ function Controls() {
 
   return (
     <ControlGroup>
-      <InputGroup value={sortParams} placeholder="Enter filter keyword" onChange={handleFilterInput} />
-      <Switch label="Show completed?" checked={showCompleted} onChange={toggleShowCompleted} />
+      <InputGroup 
+        value={sortParams} 
+        placeholder="Enter filter keyword" 
+        onChange={handleFilterInput} 
+      />
+      <Switch 
+        label="Show completed?" 
+        checked={showCompleted} 
+        onChange={toggleShowCompleted}
+        data-testid="show-completed-switch" 
+      />
       <Slider min={3} onRelease={handleSlider} initialValue={itemQty} />
       <span>Items per page</span>
     </ControlGroup>
