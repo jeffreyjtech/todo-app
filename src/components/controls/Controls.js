@@ -19,13 +19,12 @@ function Controls() {
   }
 
   function handleSlider(value) {
-    // e.preventDefault();
     handleItemQty(value);
   }
 
   return (
     <ControlGroup>
-      <InputGroup value={sortParams} onChange={handleFilterInput} />
+      <InputGroup value={sortParams} placeholder="Enter filter keyword" onChange={handleFilterInput} />
       <Switch label="Show completed?" checked={showCompleted} onChange={toggleShowCompleted} />
       <Slider min={3} onRelease={handleSlider} initialValue={itemQty} />
       <span>Items per page</span>
