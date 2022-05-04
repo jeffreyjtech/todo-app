@@ -6,7 +6,7 @@ function TodoItem({ item, toggleComplete }) {
       <p>{item.text}</p>
       <p><small>Assigned to: {item.assignee}</small></p>
       <p><small>Difficulty: {item.difficulty}</small></p>
-      <Checkbox onClick={() => toggleComplete(item.id)}><small>Complete</small></Checkbox>
+      <Checkbox checked={item.complete} onClick={() => toggleComplete(item.id)}><small>Complete</small></Checkbox>
     </Card>
   );
 }
