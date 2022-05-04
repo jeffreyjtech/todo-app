@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const SettingsContext = React.createContext();
 
 function Settings({ children }) {
-  const [showCompleted, setShowCompleted] = useState(true);
-  const [itemQty, setItemQty] = useState(6);
-  const [sortParams, setSortParams] = useState('');
+  const retrievedSettings = localStorage.getItem('settings')
+
+  const initialState = retrievedSettings ?
+    JSON.parse(retrievedSettings) :
+    { showCompleted: true, itemQty: 6, sortParams: '' };
+
+  const [showCompleted, setShowCompleted] = useState(initialState.showCompleted);
+  const [itemQty, setItemQty] = useState(initialState.itemQty);
+  const [sortParams, setSortParams] = useState(initialState.sortParams);
 
   const handleSortParams = (params) => {
     setSortParams(params.toString());
@@ -13,7 +19,7 @@ function Settings({ children }) {
 
   const handleItemQty = (qty) => {
     const parsedQty = parseInt(qty)
-    if(!parsedQty.isNaN()) {
+    if (!Number.isNaN(parsedQty)) {
       setItemQty(parsedQty);
     }
   }
@@ -22,15 +28,20 @@ function Settings({ children }) {
     setShowCompleted(!showCompleted);
   }
 
-  const value = { 
+  useEffect(() => {
+    const settings = JSON.stringify({ showCompleted, itemQty, sortParams });
+    localStorage.setItem('settings', settings);
+  }, [showCompleted, itemQty, sortParams]);
+
+  const value = {
     showCompleted,
-    toggleShowCompleted, 
+    toggleShowCompleted,
     itemQty,
-    handleItemQty, 
+    handleItemQty,
     sortParams,
-    handleSortParams, 
+    handleSortParams,
   }
-  
+
   return (
     <SettingsContext.Provider value={value}>
       {children}
