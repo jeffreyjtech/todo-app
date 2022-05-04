@@ -1,4 +1,4 @@
-import ToDo from './components/todo/ToDoList.js';
+import ToDo from './components/todoList/ToDoList.js';
 
 function App() {
   return (
