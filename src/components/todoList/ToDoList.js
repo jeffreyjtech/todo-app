@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { SettingsContext } from '../../context/settings.js';
 import TodoItem from '../todoItem/ToDoItem';
 import Form from '../form/Form';
+import Controls from '../controls/Controls.js';
 
 const ToDoList = () => {
 
@@ -70,6 +71,7 @@ const ToDoList = () => {
       <header>
         <h1>To Do List: {incomplete} items pending</h1>
       </header>
+      <Controls />
       <Menu>
         <Form addToList={addToList} />
         <ButtonGroup>
