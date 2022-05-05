@@ -3,24 +3,16 @@ import '@testing-library/jest-dom/extend-expect'; // This fixes ".toBeInTheDocum
 
 import App from '../App';
 import SettingsProvider from '../context/settings';
+import AuthProvider from "../context/auth";
 
-// Helper function
-function addItem(text, assignee, difficulty) {
-  const textInput = screen.getByTestId('text-input')
-  fireEvent.change(textInput, { target: { value: text } })
-  const assigneeInput = screen.getByTestId('assignee-input')
-  fireEvent.change(assigneeInput, { target: { value: assignee } })
-  const difficultyInput = screen.getByTestId('difficulty-input')
-  fireEvent.change(difficultyInput, { target: { value: difficulty } })
-
-  const addButton = screen.getByText('Add Item');
-  fireEvent.click(addButton)
-}
+// Helper functions
+import { login, addItem } from '../testHelpers';
 
 describe('Integration tests of todo list', () => {
 
   test('Items can be added and they renders', async () => {
-    render(<SettingsProvider><App /></SettingsProvider>);
+    render(<AuthProvider><SettingsProvider><App /></SettingsProvider></AuthProvider>);
+    login('Writer', 'writer');
 
     addItem('test text 1', 'test assignee', 5)
 
@@ -29,7 +21,7 @@ describe('Integration tests of todo list', () => {
   });
 
   test('Items past the page limit are not rendered', async () => {
-    render(<SettingsProvider><App /></SettingsProvider>);
+    render(<AuthProvider><SettingsProvider><App /></SettingsProvider></AuthProvider>);
 
     addItem('test text 1', 'test assignee', 5)
     addItem('test text 2', 'test assignee', 5)
@@ -44,7 +36,7 @@ describe('Integration tests of todo list', () => {
   });
 
   test('Completed items are hidden after showCompleted setting is toggled off', async () => {
-    render(<SettingsProvider><App /></SettingsProvider>);
+    render(<AuthProvider><SettingsProvider><App /></SettingsProvider></AuthProvider>);
 
     addItem('test text 1', 'test assignee', 5)
 
