@@ -10,7 +10,7 @@ A Web Application for securely managing a To Do List.
 
 There are only hardcoded users for this app. Their info is listed as follows
 
-- description: { *username* : *password* }
+- Test user description: { *username* : *password* }
 
 1. Read-only user with only `read` perm: { *Reader* : *reader* }
 1. Write-only user with `read` and `write` perms: { *WriteOnly* : *writeonly* }
