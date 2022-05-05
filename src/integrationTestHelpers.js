@@ -1,7 +1,14 @@
-import { screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent, render } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 
+import SettingsProvider from './context/settings';
+import AuthProvider from "./context/auth";
+
 // Helper functions
+export function deepRender(component) {
+  render(<AuthProvider><SettingsProvider>{component}</SettingsProvider></AuthProvider>);
+}
+
 export function addItem(text, assignee, difficulty) {
   const textInput = screen.getByTestId('text-input');
   fireEvent.change(textInput, { target: { value: text } });
@@ -14,8 +21,8 @@ export function addItem(text, assignee, difficulty) {
   fireEvent.click(addButton);
 }
 
-export function checkComplete() {
-  const checkbox = screen.getByTestId('checkbox');
+export function checkComplete(text) {
+  const checkbox = screen.getByTestId(`checkbox-${text}`);
   fireEvent.click(checkbox);
 }
 
@@ -30,3 +37,9 @@ export function login(username, password) {
 
   fireEvent.click(loginButton);
 }
+
+export function logout() {
+  const logoutButton = screen.getByText(/logout/i);
+  fireEvent.click(logoutButton);
+}
+
