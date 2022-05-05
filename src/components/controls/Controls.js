@@ -18,10 +18,6 @@ function Controls() {
     handleSortParams(e.target.value);
   }
 
-  function handleSlider(value) {
-    handleItemQty(value);
-  }
-
   return (
     <ControlGroup>
       <InputGroup 
@@ -35,7 +31,7 @@ function Controls() {
         onChange={toggleShowCompleted}
         data-testid="show-completed-switch" 
       />
-      <Slider min={3} onRelease={handleSlider} initialValue={itemQty} />
+      <Slider min={3} onRelease={handleItemQty} initialValue={itemQty} />
       <span>Items per page</span>
     </ControlGroup>
   );

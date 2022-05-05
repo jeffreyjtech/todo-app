@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useReducer } from 'react';
 import { Menu, Button, ButtonGroup } from '@blueprintjs/core';
 import { v4 as uuid } from 'uuid';
 
@@ -7,12 +7,29 @@ import TodoItem from '../todoItem/ToDoItem';
 import Form from '../form/Form';
 import Controls from '../controls/Controls.js';
 
-const ToDoList = () => {
+function filterList(displayList, payload) {
+  console.log(payload, typeof payload)
+  switch (typeof payload) {
+    case 'object':
+      if (Array.isArray(payload)) {
+        return payload;
+      }
+      break;
+    case 'function':
+      return displayList.filter(payload);
+    default:
+      return displayList;
+  }
+}
 
-  const { showCompleted, itemQty, sortParams } = useContext(SettingsContext)
+const ToDoList = () => {
+  const { showCompleted, itemQty, sortParams } = useContext(SettingsContext);
   const [list, setList] = useState([]);
+  const [displayList, displayDispatch] = useReducer(filterList, []);
+  const [paginatedList, setPaginatedList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
 
   /*
   function deleteItem(id) {
@@ -25,46 +42,70 @@ const ToDoList = () => {
     setList([...list, item]);
   }
 
-  function toggleComplete(id) {
+  function changePage(e) {
+    e.preventDefault();
+    setCurrentPage(parseInt(e.target.value));
+  }
 
-    const items = list.map(item => {
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [itemQty, showCompleted, sortParams]);
+
+  useEffect(() => {
+    displayDispatch(list);
+  }, [list]);
+
+
+  useEffect(() => {
+    if (!showCompleted) {
+      displayDispatch((item) => !item.complete);
+    } else {
+      displayDispatch(list);
+    }
+  }, [showCompleted, list]);
+
+  useEffect(() => {
+    if (sortParams) {
+      displayDispatch((item) =>
+        item.text.toLowerCase().includes(sortParams.toLowerCase())
+      );
+    } else {
+      displayDispatch(list);
+    }
+  }, [sortParams, list]);
+
+  useEffect(() => {
+    let temp = displayList.filter((item, idx) =>
+      idx < currentPage * itemQty && idx >= (currentPage - 1) * itemQty);
+    setPaginatedList(temp);
+    setPageCount(Math.ceil(displayList.length / itemQty))
+  }, [currentPage, itemQty, list, showCompleted, sortParams]);
+
+  function toggleComplete(id) {
+    const items = list.map((item) => {
       if (item.id === id) {
         item.complete = !item.complete;
       }
       return item;
     });
-
     setList(items);
-
-  }
-
-  function changePage(e) {
-    e.preventDefault();
-    setPage(parseInt(e.target.value));
   }
 
   useEffect(() => {
-    let incompleteCount = list.filter(item => !item.complete).length;
+    let incompleteCount = list.filter((item) => !item.complete).length;
     setIncomplete(incompleteCount);
     document.title = `To Do List: ${incomplete}`;
   }, [list, incomplete]);
 
-  let sortedList = [...list];
-  if (!showCompleted) {
-    sortedList = sortedList.filter((item) => !item.complete)
-  }
-
-  sortedList = sortedList.filter((item) => {
-    return item.text.toLowerCase().includes(sortParams.toLowerCase());
-  });
-
   let pageButtons = [];
-  let pageQty = Math.ceil(sortedList.length / itemQty);
-  for (let i = 1; i <= pageQty; i++) {
-    pageButtons[i] = <Button onClick={changePage} value={i} key={uuid()}>{i}</Button>
+  for (let i = 1; i <= pageCount; i++) {
+    let isActive = i === currentPage;
+    pageButtons[i] = (
+      <Button onClick={changePage} value={i} key={uuid()} active={isActive}>
+        {i}
+      </Button>
+    );
   }
-
-  sortedList = sortedList.filter((item, idx) => idx < page * itemQty && idx >= (page - 1) * itemQty);
 
   return (
     <>
@@ -74,17 +115,11 @@ const ToDoList = () => {
       <Controls />
       <Menu>
         <Form addToList={addToList} />
-        <ButtonGroup>
-          {pageButtons}
-        </ButtonGroup>
+        <ButtonGroup>{pageButtons}</ButtonGroup>
       </Menu>
       <div>
-        {sortedList.map(item => (
-          <TodoItem
-            key={item.id}
-            toggleComplete={toggleComplete}
-            item={item}
-          />
+        {displayList.map((item) => (
+          <TodoItem key={item.id} toggleComplete={toggleComplete} item={item} />
         ))}
       </div>
     </>
