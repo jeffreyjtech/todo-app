@@ -2,16 +2,14 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect'; // This fixes ".toBeInTheDocument is not a function" error
 
 import App from '../App';
-import SettingsProvider from '../context/settings';
-import AuthProvider from "../context/auth";
 
 // Helper functions
-import { login, addItem } from '../testHelpers';
+import { login, addItem, deepRender } from '../integrationTestHelpers';
 
 describe('Integration tests of todo list', () => {
 
   test('Items can be added and they renders', async () => {
-    render(<AuthProvider><SettingsProvider><App /></SettingsProvider></AuthProvider>);
+    deepRender(<App />)
     login('Writer', 'writer');
 
     addItem('test text 1', 'test assignee', 5)
@@ -21,7 +19,7 @@ describe('Integration tests of todo list', () => {
   });
 
   test('Items past the page limit are not rendered', async () => {
-    render(<AuthProvider><SettingsProvider><App /></SettingsProvider></AuthProvider>);
+    deepRender(<App />)
 
     addItem('test text 1', 'test assignee', 5)
     addItem('test text 2', 'test assignee', 5)
@@ -36,17 +34,17 @@ describe('Integration tests of todo list', () => {
   });
 
   test('Completed items are hidden after showCompleted setting is toggled off', async () => {
-    render(<AuthProvider><SettingsProvider><App /></SettingsProvider></AuthProvider>);
+    deepRender(<App />)
 
     addItem('test text 1', 'test assignee', 5)
 
     const todoItem = screen.queryByText('test text 1');
     expect(todoItem).toBeInTheDocument();
 
-    const completeSwitch = screen.getByTestId("checkbox")
+    const completeSwitch = screen.getByTestId(`checkbox-test text 1`)
     fireEvent.click(completeSwitch);
     
-    const showSwitch = screen.getByTestId("show-completed-switch")
+    const showSwitch = screen.getByTestId('show-completed-switch')
     fireEvent.click(showSwitch);
 
     expect(todoItem).not.toBeInTheDocument();
