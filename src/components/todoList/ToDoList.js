@@ -6,6 +6,7 @@ import { SettingsContext } from '../../context/settings.js';
 import TodoItem from '../todoItem/ToDoItem';
 import Form from '../form/Form';
 import Controls from '../controls/Controls.js';
+import Auth from '../auth/Auth.js';
 
 const ToDoList = () => {
 
@@ -73,7 +74,9 @@ const ToDoList = () => {
       </header>
       <Controls />
       <Menu>
-        <Form addToList={addToList} />
+        <Auth capability="write">
+          <Form addToList={addToList} />
+        </Auth>
         <ButtonGroup>
           {pageButtons}
         </ButtonGroup>
