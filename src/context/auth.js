@@ -16,6 +16,12 @@ const testUsers = {
     capabilities: ['read'],
     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUmVhZGVyIiwiY2FwYWJpbGl0aWVzIjpbInJlYWQiXX0.8jtDua75M64EiablS8CJIaD4KV9rMzLFGaKXsbEybco'
   },
+  WriteOnly: {
+    password: 'writeonly',
+    name: 'WriteOnly',
+    capabilities: ['read', 'write'],
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiV3JpdGVPbmx5IiwiY2FwYWJpbGl0aWVzIjpbInJlYWQiLCJ3cml0ZSJdfQ.gGOiubOphgkdA8xJdEmgINV6hV530_gksx9PbXUKtGY'
+  },
   Writer: {
     password: 'writer',
     name: 'Writer',
@@ -49,7 +55,6 @@ function AuthProvider({ children }) {
   const _validateToken = (token) => {
     try {
       let validUser = jwt_decode(token);
-      console.log('Valid user from token', validUser)
       if (validUser) {
         setUser(validUser);
         setIsLoggedIn(true);
