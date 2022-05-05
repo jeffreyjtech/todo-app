@@ -12,7 +12,10 @@ function TodoItem({ item, toggleComplete, deleteItem }) {
       <p><small>Assigned to: {item.assignee}</small></p>
       <p><small>Difficulty: {item.difficulty}</small></p>
       <Auth capability="delete">
-        <Button onClick={() => deleteItem(item.id)}>
+        <Button 
+          onClick={() => deleteItem(item.id)}
+          data-testid="you-have-delete-perms"
+        >
           <Icon icon="delete" intent="Danger"/>
         </Button>
       </Auth>
