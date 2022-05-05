@@ -20,7 +20,6 @@ describe('Integration tests of auth features', () => {
 
     expect(screen.queryByText(/login/i)).not.toBeInTheDocument();
     expect(screen.getByText(/logout/i)).toBeInTheDocument();
-    logout();
   });
 
   test('Readers cannot see the add item form', () => {
@@ -28,7 +27,6 @@ describe('Integration tests of auth features', () => {
     login('Reader', 'reader');
 
     expect(screen.queryByTestId(/you-have-write-perms/i)).not.toBeInTheDocument();
-    logout();
   });
 
   test('WriteOnly users can see & use "add item" form but not the delete or complete controls', () => {
@@ -42,7 +40,6 @@ describe('Integration tests of auth features', () => {
     expect(screen.getByText(/testing 1 2 3/i)).toBeInTheDocument();
     expect(screen.queryByTestId(/checkbox.*/i)).not.toBeInTheDocument();
     expect(screen.queryByTestId(/you-have-delete-perms/i)).not.toBeInTheDocument();
-    logout();
   });
 
   test('Write users can see all controls', () => {
@@ -55,6 +52,5 @@ describe('Integration tests of auth features', () => {
     expect(screen.getByTestId(/you-have-write-perms/i)).toBeInTheDocument();
     expect(screen.getByTestId(/checkbox.*/i)).toBeInTheDocument();
     expect(screen.getByTestId(/you-have-delete-perms/i)).toBeInTheDocument();
-    logout();
   });
 });

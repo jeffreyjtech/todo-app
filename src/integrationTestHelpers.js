@@ -27,6 +27,11 @@ export function checkComplete(text) {
 }
 
 export function login(username, password) {
+  const logoutButton = screen.queryByText(/logout/i);
+  if (logoutButton) {
+    fireEvent.click(logoutButton);
+  }
+  
   const loginButton = screen.getByText(/login/i);
 
   const usernameInput = screen.getByTestId('username');
