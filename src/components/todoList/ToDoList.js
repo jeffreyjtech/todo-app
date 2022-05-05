@@ -15,12 +15,10 @@ const ToDoList = () => {
   const [incomplete, setIncomplete] = useState([]);
   const [page, setPage] = useState(1);
 
-  /*
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);
     setList(items);
   }
-  */
 
   function addToList(item) {
     setList([...list, item]);
@@ -39,9 +37,8 @@ const ToDoList = () => {
 
   }
 
-  function changePage(e) {
-    e.preventDefault();
-    setPage(parseInt(e.target.value));
+  function changePage(id) {
+    setPage(id);
   }
 
   useEffect(() => {
@@ -62,7 +59,16 @@ const ToDoList = () => {
   let pageButtons = [];
   let pageQty = Math.ceil(sortedList.length / itemQty);
   for (let i = 1; i <= pageQty; i++) {
-    pageButtons[i] = <Button onClick={changePage} value={i} key={uuid()}>{i}</Button>
+    pageButtons[i] = (
+      <Button 
+        onClick={() => changePage(i)} 
+        value={i} 
+        key={uuid()} 
+        active={i === page}
+      >
+        {i}
+      </Button>
+    )
   }
 
   sortedList = sortedList.filter((item, idx) => idx < page * itemQty && idx >= (page - 1) * itemQty);
@@ -86,6 +92,7 @@ const ToDoList = () => {
           <TodoItem
             key={item.id}
             toggleComplete={toggleComplete}
+            deleteItem={deleteItem}
             item={item}
           />
         ))}
