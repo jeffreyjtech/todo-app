@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect'; // This fixes ".toBeInTheDocument is not a function" error
 
 import App from '../App';
