@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect'; // This fixes ".toBeInTheDocum
 import App from '../App';
 
 // Helper functions
-import { login, addItem, deepRender, logout } from '../integrationTestHelpers';
+import { login, addItem, deepRender } from '../integrationTestHelpers';
 
 describe('Integration tests of auth features', () => {
 
