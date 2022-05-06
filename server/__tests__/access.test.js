@@ -37,14 +37,14 @@ describe('Testing todo access', () => {
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
-      .send({ body: 'I love having secure todo items' });
+      .send({ text: 'I love having secure todo items' });
 
     let id = response.body.id;
 
     response = await request
       .put(`/todo/${id}`)
       .set('Authorization', `Bearer ${testUser2.token}`)
-      .send({ body: 'I hate having secure todo items' });
+      .send({ text: 'I hate having secure todo items' });
 
     expect(response.status).toBe(403);
   });
@@ -53,7 +53,7 @@ describe('Testing todo access', () => {
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
-      .send({ body: 'I own my own todo items' });
+      .send({ text: 'I own my own todo items' });
 
     let id = response.body.id;
 
@@ -73,7 +73,7 @@ describe('Testing todo access', () => {
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
-      .send({ body: 'I hope the admin doesn\'t change this' });
+      .send({ text: 'I hope the admin doesn\'t change this' });
 
     let id = response.body.id;
 
@@ -81,17 +81,17 @@ describe('Testing todo access', () => {
     response = await request
       .put(`/todo/${id}`)
       .set('Authorization', `Bearer ${testAdmin.token}`)
-      .send({ body: 'Nope, I can change it' });
+      .send({ text: 'Nope, I can change it' });
 
     expect(response.status).toBe(200);
-    expect(response.body.body).toBe('Nope, I can change it');
+    expect(response.body.text).toBe('Nope, I can change it');
   });
 
   test('Admin should be able to delete another user\'s todo item', async () => {
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
-      .send({ body: 'I hope my todo doesn\'t get deleted' });
+      .send({ text: 'I hope my todo doesn\'t get deleted' });
 
     let id = response.body.id;
 
