@@ -1,10 +1,11 @@
-'use strict';
+
 
 const todoModel = (sequelize, DataTypes) => {
   const model = sequelize.define('todo', {
     author: { type: DataTypes.STRING, allowNull: false },
-    body: { type: DataTypes.STRING, allowNull: false },
-    length: { type: DataTypes.INTEGER, allowNull: false },
+    text: { type: DataTypes.STRING, allowNull: false },
+    assignee: { type: DataTypes.STRING, allowNull: false },
+    complete: { type: DataTypes.BOOLEAN, default: false, allowNull: false },
   });
 
   return model;
