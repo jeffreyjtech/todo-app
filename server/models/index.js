@@ -16,7 +16,7 @@ const sequelizeConfig = process.env.DATABASE_URL ?
   } :
   {};
 
-const dbUrl = process.env.DATABASE_URL || 'sqlite:todo';
+const dbUrl = process.env.DATABASE_URL || 'sqlite:todoDb';
 
 const sequelize = new Sequelize(dbUrl, sequelizeConfig);
 
