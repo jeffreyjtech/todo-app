@@ -9,10 +9,11 @@ const user = {
   password: 'password',
 };
 
-let testUser; 
+let testUser;
+let testItemId; 
 
 describe('Content Routes functionality with login token', () => {
-  test('Should post a message', async () => {
+  test('Should post a todo item', async () => {
     testUser = await request.post('/signup').send(user);
     testUser = testUser.body;
 
@@ -20,39 +21,41 @@ describe('Content Routes functionality with login token', () => {
       .post('/todo')
       .set('authorization', `Bearer ${testUser.token}`)
       .send({
-        body: 'Our first message',
+        text: 'Our first todo item',
       });
     
-    expect(response.status).toBe(201); 
-    expect(response.body.body).toBeTruthy();
-  });
+      
+      expect(response.status).toBe(201); 
+      expect(response.body.text).toBe('Our first todo item');
+      expect(response.body.id).toBeTruthy();
+      testItemId = response.body.id;
+    });
 
   test('Should get todo', async () => {
     let response = await request.get('/todo').set('authorization', `Bearer ${testUser.token}`);
 
     expect(response.status).toBe(200);
-    expect(response.body[0].body).toBeTruthy();
-    expect(response.body.length).toBeGreaterThan(0);
+    expect(response.body[0].text).toBeTruthy();
   });
 
-  test('Should get one message', async () => {
-    let response = await request.get('/todo/1').set('Authorization', `Bearer ${testUser.token}`);
+  test('Should get one todo item', async () => {
+    let response = await request.get(`/todo/${testItemId}`).set('Authorization', `Bearer ${testUser.token}`);
 
     expect(response.status).toBe(200);
-    expect(response.body.id).toBe(1);
+    expect(response.body.id).toBe(testItemId);
   });
 
-  test('Should update a message', async () => {
-    let response = await request.put('/todo/1').set('Authorization', `Bearer ${testUser.token}`).send({
-      body: 'Our updated message',
+  test('Should update a todo item', async () => {
+    let response = await request.put(`/todo/${testItemId}`).set('Authorization', `Bearer ${testUser.token}`).send({
+      body: 'Our updated todo item',
     });
     
     expect(response.status).toBe(200);
-    expect(response.body.body).toBe('Our updated message');
+    expect(response.body.body).toBe('Our updated todo item');
   });
 
-  test('Should delete a message', async () => {
-    let response = await request.delete('/todo/1').set('Authorization', `Bearer ${testUser.token}`);
+  test('Should delete a todo item', async () => {
+    let response = await request.delete(`/todo/${testItemId}`).set('Authorization', `Bearer ${testUser.token}`);
 
     expect(response.status).toBe(204);
   });
@@ -61,7 +64,7 @@ describe('Content Routes functionality with login token', () => {
     const response = await request
       .post('/todo')
       .send({
-        body: 'Our first message',
+        body: 'Our first todo item',
       });
     
     expect(response.status).toBe(403);
@@ -72,7 +75,7 @@ describe('Content Routes functionality with login token', () => {
       .post('/todo')
       .set('authorization', 'Bearer bAdToKEn')
       .send({
-        body: 'Our first message',
+        body: 'Our first todo item',
       });
     
     expect(response.status).toBe(403);
@@ -80,19 +83,19 @@ describe('Content Routes functionality with login token', () => {
 });
 
 describe('Testing with invalid requests', () => {
-  test('Should post a message', async () => {
+  test('Should post a todo item', async () => {
 
     const response = await request
       .post('/todo')
       .set('authorization', `Bearer ${testUser.token}`)
       .send({
-        //purposely creating an error with empty object
+        // purposely creating an empty object to induce an error
       });
     
     expect(response.status).toBe(500); 
   });
 
-  test('Should not get a message if it does not exist', async () => {
+  test('Should not get a todo item if it does not exist', async () => {
     let response = await request
       .get('/todo/1999')
       .set('authorization', `Bearer ${testUser.token}`);
@@ -100,24 +103,24 @@ describe('Testing with invalid requests', () => {
     expect(response.status).toBe(500);
   });
 
-  test('Should not delete a message if id is invalid', async () => {
+  test('Should not delete a todo item if id is invalid', async () => {
     let response = await request.delete('/todo/1999').set('authorization', `Bearer ${testUser.token}`);
 
     expect(response.status).toBe(500);
   });
 
-  test('Should not update a message if id is invalid', async () => {
+  test('Should not update a todo item if id is invalid', async () => {
     let response = await request.put('/todo/1999').set('authorization', `Bearer ${testUser.token}`);
 
     expect(response.status).toBe(500);
   });
 
-  test('Should not update a message if update body data is invalid', async () => {
+  test('Should not update a todo item if update body data is invalid', async () => {
     let response = await request
       .post('/todo')
       .set('authorization', `Bearer ${testUser.token}`)
       .send({
-        body: 'Our test message',
+        body: 'Our test todo item',
       });
     let id = response.body.id;  
 
