@@ -47,11 +47,11 @@ describe('Content Routes functionality with login token', () => {
 
   test('Should update a todo item', async () => {
     let response = await request.put(`/todo/${testItemId}`).set('Authorization', `Bearer ${testUser.token}`).send({
-      body: 'Our updated todo item',
+      complete: true,
     });
     
     expect(response.status).toBe(200);
-    expect(response.body.body).toBe('Our updated todo item');
+    expect(response.body.complete).toBe(true);
   });
 
   test('Should delete a todo item', async () => {
@@ -64,7 +64,7 @@ describe('Content Routes functionality with login token', () => {
     const response = await request
       .post('/todo')
       .send({
-        body: 'Our first todo item',
+        text: 'Our first todo item',
       });
     
     expect(response.status).toBe(403);
@@ -75,7 +75,7 @@ describe('Content Routes functionality with login token', () => {
       .post('/todo')
       .set('authorization', 'Bearer bAdToKEn')
       .send({
-        body: 'Our first todo item',
+        text: 'Our first todo item',
       });
     
     expect(response.status).toBe(403);
@@ -120,12 +120,12 @@ describe('Testing with invalid requests', () => {
       .post('/todo')
       .set('authorization', `Bearer ${testUser.token}`)
       .send({
-        body: 'Our test todo item',
+        text: 'Our test todo item',
       });
     let id = response.body.id;  
 
     response = await request.put(`/todo/${id}`).set('Authorization', `Bearer ${testUser.token}`).send({
-      body: null,
+      text: null,
     });
 
     expect(response.status).toBe(500);
