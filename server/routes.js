@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { messages: todoModel } = require('./models');
+const { todoModel } = require('./models');
 
 const bearerAuth = require('./auth/middleware/bearer.js');
 const accessAuth = require('./auth/middleware/access.js');
@@ -12,7 +12,6 @@ router.post('/todo', bearerAuth, async (req, res, next) => {
     if (!req.body) throw new Error('No req.body');
     let newRecord = await todoModel.create({ 
       ...req.body,
-      length: req.body.body.length,
       author: req.user.username,
     });
 
@@ -64,7 +63,7 @@ router.delete('/todo/:id', bearerAuth, accessAuth, async (req, res, next) => {
     let deletedRecord = await todoModel.findOne({ where: { id: req.params.id } });
     if (deletedRecord) {
       await todoModel.destroy({ where: { id: req.params.id } });
-      res.status(204).send('Message Deleted');
+      res.status(204).send('Todo Item Deleted');
     } else {
       throw new Error('Record not found');
     }

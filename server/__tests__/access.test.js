@@ -24,9 +24,9 @@ let testUser1;
 let testUser2;
 let testAdmin;
 
-describe('Testing message access', () => {
+describe('Testing todo access', () => {
 
-  test('User should not be able to update another user\'s message', async () => {
+  test('User should not be able to update another user\'s todo item', async () => {
     // Sign up our users
     testUser1 = await request.post('/signup').send(user1Credentials);
     testUser1 = testUser1.body;
@@ -37,23 +37,23 @@ describe('Testing message access', () => {
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
-      .send({ body: 'I love having secure messages' });
+      .send({ body: 'I love having secure todo items' });
 
     let id = response.body.id;
 
     response = await request
       .put(`/todo/${id}`)
       .set('Authorization', `Bearer ${testUser2.token}`)
-      .send({ body: 'I hate having secure messages' });
+      .send({ body: 'I hate having secure todo items' });
 
     expect(response.status).toBe(403);
   });
 
-  test('User should not be able to delete another user\'s message', async () => {
+  test('User should not be able to delete another user\'s todo item', async () => {
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
-      .send({ body: 'I own my own messages' });
+      .send({ body: 'I own my own todo items' });
 
     let id = response.body.id;
 
@@ -64,12 +64,12 @@ describe('Testing message access', () => {
     expect(response.status).toBe(403);
   });
 
-  test('Admin should be able to update another user\'s message', async () => {
+  test('Admin should be able to update another user\'s todo item', async () => {
     // signup the admin
     testAdmin = await request.post('/signup').send(adminCredentials);
     testAdmin = testAdmin.body;
 
-    // post a message
+    // post a todo
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
@@ -87,11 +87,11 @@ describe('Testing message access', () => {
     expect(response.body.body).toBe('Nope, I can change it');
   });
 
-  test('Admin should be able to delete another user\'s message', async () => {
+  test('Admin should be able to delete another user\'s todo item', async () => {
     let response = await request
       .post('/todo')
       .set('Authorization', `Bearer ${testUser1.token}`)
-      .send({ body: 'I hope my message doesn\'t get deleted' });
+      .send({ body: 'I hope my todo doesn\'t get deleted' });
 
     let id = response.body.id;
 

@@ -1,17 +1,17 @@
 'use strict';
 
-// Import message model
+// Import todo item model
 const { todoModel } = require('../../models');
 
 module.exports = async (req, res, next) => {
   try {
-    const foundMessage = await todoModel.findOne({ where: { id: req.params.id } });
+    const foundTodo = await todoModel.findOne({ where: { id: req.params.id } });
 
-    if (!foundMessage) throw new Error('Message not found');
+    if (!foundTodo) throw new Error('Todo item not found');
 
     // req.user has all the user info from bearerAuth middleware
     // Including the user's verified role and username
-    if (req.user.username === foundMessage.author || req.user.role === 'admin') {
+    if (req.user.username === foundTodo.author || req.user.role === 'admin') {
       next();
     } else {
       // throw an error 
