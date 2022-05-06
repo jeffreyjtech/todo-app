@@ -4,11 +4,11 @@ A Web Application for securely managing a To Do List.
 
 ## UML
 
-![My Lab 33 UML](assets/lab-33-uml.jpg)
+![My Lab 34 UML](assets/lab-34-uml.jpg)
 
 ## Test Logins
 
-There are only hardcoded users for this app. Their info is listed as follows
+There are only 3 hardcoded users for this app:
 
 - Test user description: { *username* : *password* }
 
@@ -33,3 +33,7 @@ The `useForm` hook provides an interface for creating and setting state for the 
 ### Lab 32 UML
 
 ![My Lab 32 UML](assets/lab-32-uml.jpg)
+
+### Lab 33 UML
+
+![My Lab 33 UML](assets/lab-33-uml.jpg)
