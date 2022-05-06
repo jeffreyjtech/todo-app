@@ -9,8 +9,8 @@ const bearerAuth = require('./middleware/bearer.js');
 
 router.post('/signup', async (req, res, next) => {
   try {
-    if(!req.body.handle || !req.body.displayName || !req.body.password) {
-      throw new Error('Need to enter value in all fields');
+    if(!req.body.username || !req.body.password) {
+      throw new Error('Need to provide complete credentials for signup');
     }
     let userRecord = await users.create(req.body);
     res.status(200).json(userRecord);

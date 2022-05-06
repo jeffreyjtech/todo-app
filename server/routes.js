@@ -13,7 +13,7 @@ router.post('/messages', bearerAuth, async (req, res, next) => {
     let newRecord = await messages.create({ 
       ...req.body,
       length: req.body.body.length,
-      author: req.user.handle,
+      author: req.user.username,
     });
 
     res.status(201).json(newRecord);

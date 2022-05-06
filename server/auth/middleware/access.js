@@ -10,8 +10,8 @@ module.exports = async (req, res, next) => {
     if (!foundMessage) throw new Error('Message not found');
 
     // req.user has all the user info from bearerAuth middleware
-    // Including the user's verified role and handle
-    if (req.user.handle === foundMessage.author || req.user.role === 'admin') {
+    // Including the user's verified role and username
+    if (req.user.username === foundMessage.author || req.user.role === 'admin') {
       next();
     } else {
       // throw an error 
