@@ -2,7 +2,7 @@
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-const userModel = require('./users');
+const todoModel = require('./users');
 
 // This will assign the Heroku-specific configs if the database is deployed.
 const sequelizeConfig = process.env.HEROKU_POSTGRESQL_GOLD_URL ?
@@ -22,5 +22,5 @@ const sequelize = new Sequelize(dbUrl, sequelizeConfig);
 
 module.exports = {
   authSequelize: sequelize,
-  users: userModel(sequelize, DataTypes),
+  users: todoModel(sequelize, DataTypes),
 };

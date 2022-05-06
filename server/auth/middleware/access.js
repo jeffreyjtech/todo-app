@@ -1,11 +1,11 @@
 'use strict';
 
 // Import message model
-const { messages } = require('../../models');
+const { todoModel } = require('../../models');
 
 module.exports = async (req, res, next) => {
   try {
-    const foundMessage = await messages.findOne({ where: { id: req.params.id } });
+    const foundMessage = await todoModel.findOne({ where: { id: req.params.id } });
 
     if (!foundMessage) throw new Error('Message not found');
 

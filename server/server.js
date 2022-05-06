@@ -1,14 +1,12 @@
 'use strict';
 
-const authRouter = require('./auth/routes.js');
+const express  = require ('express');
+const cors = require ('cors');
 
+const authRouter = require('./auth/routes.js');
 const content = require('./routes');
 
-const express  = require ('express');
-
 const app = express();
-
-const cors = require ('cors');
 
 app.use(cors());
 app.use(express.json());
@@ -25,9 +23,9 @@ app.use('*', (req, res, next) => {
 
 module.exports = {
   app,
-  start: port => {
-    app.listen(port, () => {
-      console.log('api is listening on ', port);
+  start: PORT => {
+    app.listen(PORT, () => {
+      console.log('api is listening on ', PORT);
     });
   },
 };

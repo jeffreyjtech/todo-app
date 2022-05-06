@@ -2,7 +2,7 @@
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-const messageModel = require('./todo');
+const todoModel = require('./todo');
 
 // This will assign the Heroku-specific configs if the database is deployed.
 const sequelizeConfig = process.env.DATABASE_URL ?
@@ -22,5 +22,5 @@ const sequelize = new Sequelize(dbUrl, sequelizeConfig);
 
 module.exports = {
   contentSequelize: sequelize,
-  messages: messageModel(sequelize, DataTypes),
+  todoModel: todoModel(sequelize, DataTypes),
 };
